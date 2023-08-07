@@ -1,23 +1,14 @@
-import { useQuery } from '@tanstack/react-query'; // fetching으로 받은 데이터를 캐시에 저장해준다.
+import { useUserQuery } from './hooks/useUsers';
 
 function UserInfo() {
-	const fetchUser = async ({ queryKey }) => {
-		const response = await fetch(`https://jsonplaceholder.typicode.com/users/${queryKey[1]}`);
-		return await response.json();
-	};
+	const { data, isSuccess } = useUserQuery();
 
-	/*
-    [ queryKey ]
-    동일한 queryKey(ex. user)를 가질 때 동일한 api데이터를 가져온다.
-  */
-	const { data, isLoading, isSuccess, isError } = useQuery(['user', 2], fetchUser, {
-		refetchOnWindowFocus: false,
-		refetchOnMount: false,
-		staleTime: 1000 * 5,
-		cacheTime: 1000 * 5,
-	});
-
-	return <div>{isSuccess && <p>Name: {data.name}</p>}</div>;
+	return (
+		<div>
+			<h1>UserInfo</h1>
+			{isSuccess && <p>Name: {data.name}</p>}
+		</div>
+	);
 }
 
 export default UserInfo;
