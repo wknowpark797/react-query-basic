@@ -5,8 +5,8 @@ const fetchUser = async ({ queryKey }) => {
 	return await response.json();
 };
 
-export const useUserQuery = () => {
-	return useQuery(['user', 1], fetchUser, {
+export const useUserQuery = (opt) => {
+	return useQuery(['user', opt], fetchUser, {
 		refetchOnWindowFocus: false,
 		refetchOnMount: false,
 		staleTime: 1000 * 5,
